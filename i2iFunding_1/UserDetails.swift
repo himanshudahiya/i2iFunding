@@ -1,5 +1,6 @@
 
 import UIKit
+import Contacts
 
 class UserDetails: UIViewController {
     
@@ -21,6 +22,10 @@ class UserDetails: UIViewController {
     var uncheckbox = UIImage(named: "unchecked")
     
     var isCurrEqPermClicked:Bool!
+    // for accessing contacts
+    var contactStore = CNContactStore()
+    var contacts = [contactStruct]()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +36,13 @@ class UserDetails: UIViewController {
         
         // 2. add the gesture recognizer to a view
         scrollView.addGestureRecognizer(tapGesture)
+        
+        contactStore.requestAccess(for: .contacts) { (success, error) in
+            if (success){
+                print("authorisation successful")
+            }
+        }
+        FetchContacts()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -159,6 +171,24 @@ class UserDetails: UIViewController {
         else {
             currEqPermButton.setImage(uncheckbox, for: UIControlState.normal)
         }
+    }
+    
+    @IBAction func unwindFromEmploymentForm( _sender: UIStoryboardSegue){
+        
+    }
+    
+    //func for fetching contacts
+    func FetchContacts(){
+        let key = [CNContactGivenNameKey, CNContactPhoneNumbersKey] as [CNKeyDescriptor]
+        let request = CNContactFetchRequest(keysToFetch: key)
+        try! contactStore.enumerateContacts(with: request) {(contact, stoppingPointer) in
+            let name = contact.givenName
+            let number = contact.phoneNumbers.first?.value.stringValue
+            let contactToAppend = contactStruct(contactName: name, contactNumber: number!)
+            self.contacts.append(contactToAppend)
+            
+        }
+        print(contacts.first?.contactName ?? "")
     }
     
     

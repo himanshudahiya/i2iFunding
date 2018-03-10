@@ -1,0 +1,7 @@
+I2IFunding
+
+UI Design of borrower app for I2IFunding!!
+
+To use, download the project repository, and open i2iFunding_1.xcodeproj file in Xcode. The first ViewController is Login Window. Only basic code for checking the email is implemented. Email is verified by regex, so the email field must contain "@" and "." in it.
+
+App still under development!!

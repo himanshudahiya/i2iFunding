@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		39101D172023A0FB00211573 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39101D162023A0FB00211573 /* TextField.swift */; };
+		392757A3205412CF009EA1D0 /* Contacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392757A2205412CF009EA1D0 /* Contacts.swift */; };
 		394F56E1202F9FA700AE9547 /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F56E0202F9FA700AE9547 /* UserDetails.swift */; };
 		39A7120F2023C85700A27B42 /* signUP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A7120E2023C85700A27B42 /* signUP.swift */; };
 		39C11737203372D6002FDE15 /* EmploymentDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C11736203372D6002FDE15 /* EmploymentDetails.swift */; };
@@ -20,6 +21,7 @@
 		39E921712017C494002C8716 /* i2iFunding_1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E921702017C494002C8716 /* i2iFunding_1Tests.swift */; };
 		39E9217C2017C494002C8716 /* i2iFunding_1UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E9217B2017C494002C8716 /* i2iFunding_1UITests.swift */; };
 		39E9218A2017C6DB002C8716 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E921892017C6DB002C8716 /* RoundedButton.swift */; };
+		39F6D4E9204AB3F8005C3BB2 /* EducationDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F6D4E8204AB3F8005C3BB2 /* EducationDetails.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +43,8 @@
 
 /* Begin PBXFileReference section */
 		39101D162023A0FB00211573 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
+		39118730204FE0D900A8F145 /* i2iFunding_1-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "i2iFunding_1-Bridging-Header.h"; sourceTree = "<group>"; };
+		392757A2205412CF009EA1D0 /* Contacts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contacts.swift; sourceTree = "<group>"; };
 		394F56E0202F9FA700AE9547 /* UserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetails.swift; sourceTree = "<group>"; };
 		39A7120E2023C85700A27B42 /* signUP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = signUP.swift; sourceTree = "<group>"; };
 		39C11736203372D6002FDE15 /* EmploymentDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmploymentDetails.swift; sourceTree = "<group>"; };
@@ -59,6 +63,7 @@
 		39E9217B2017C494002C8716 /* i2iFunding_1UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = i2iFunding_1UITests.swift; sourceTree = "<group>"; };
 		39E9217D2017C494002C8716 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		39E921892017C6DB002C8716 /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
+		39F6D4E8204AB3F8005C3BB2 /* EducationDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationDetails.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +117,7 @@
 				39E9215B2017C494002C8716 /* AppDelegate.swift */,
 				39E9215D2017C494002C8716 /* ViewController.swift */,
 				39E9215F2017C494002C8716 /* Main.storyboard */,
+				392757A2205412CF009EA1D0 /* Contacts.swift */,
 				39E921622017C494002C8716 /* Assets.xcassets */,
 				39E921642017C494002C8716 /* LaunchScreen.storyboard */,
 				39E921672017C494002C8716 /* Info.plist */,
@@ -121,6 +127,8 @@
 				39DD3EE5202E529D0029B9EA /* EnterOTP.swift */,
 				394F56E0202F9FA700AE9547 /* UserDetails.swift */,
 				39C11736203372D6002FDE15 /* EmploymentDetails.swift */,
+				39F6D4E8204AB3F8005C3BB2 /* EducationDetails.swift */,
+				39118730204FE0D900A8F145 /* i2iFunding_1-Bridging-Header.h */,
 			);
 			path = i2iFunding_1;
 			sourceTree = "<group>";
@@ -217,6 +225,7 @@
 				TargetAttributes = {
 					39E921572017C494002C8716 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
 					39E9216B2017C494002C8716 = {
@@ -386,9 +395,11 @@
 				39A7120F2023C85700A27B42 /* signUP.swift in Sources */,
 				39C11737203372D6002FDE15 /* EmploymentDetails.swift in Sources */,
 				39E9215E2017C494002C8716 /* ViewController.swift in Sources */,
+				392757A3205412CF009EA1D0 /* Contacts.swift in Sources */,
 				39E9218A2017C6DB002C8716 /* RoundedButton.swift in Sources */,
 				394F56E1202F9FA700AE9547 /* UserDetails.swift in Sources */,
 				39E9215C2017C494002C8716 /* AppDelegate.swift in Sources */,
+				39F6D4E9204AB3F8005C3BB2 /* EducationDetails.swift in Sources */,
 				39101D172023A0FB00211573 /* TextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -555,12 +566,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2F9LJXJ8CQ;
 				INFOPLIST_FILE = i2iFunding_1/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.himanshudahiya.i2iFunding-1";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.himanshudahiya.i2iFunding-111";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "i2iFunding_1/i2iFunding_1-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -570,12 +586,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2F9LJXJ8CQ;
 				INFOPLIST_FILE = i2iFunding_1/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.himanshudahiya.i2iFunding-1";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.himanshudahiya.i2iFunding-111";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "i2iFunding_1/i2iFunding_1-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

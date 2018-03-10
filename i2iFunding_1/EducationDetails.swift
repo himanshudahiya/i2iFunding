@@ -1,55 +1,14 @@
-//
-//  ViewController.swift
-//  i2iFunding_1
-//
-//  Created by himanshu dahiya on 24/01/18.
-//  Copyright © 2018 himanshu dahiya. All rights reserved.
-//
 
 import UIKit
 
-class ViewController: UIViewController {
+class EducationDetails: UIViewController {
+    
+    
 
-    @IBOutlet var uiView: UIView!
-    @IBOutlet var email: UITextField!
-    @IBOutlet var password: UITextField!
-    @IBOutlet var scrollView: UIScrollView!
-    @IBOutlet var backgroundImage: UIImageView!
-    
-    @IBAction func login(_ sender: Any) {
-        if(emailCorrect==true){
-            performSegue(withIdentifier: "login_correct", sender: self)
-        }
-    }
-    
-    var emailCorrect = false
-    @IBAction func emailEditing(_ sender: Any) {
-        if isValidEmail(testStr: email.text!) == true {
-            let rightImageView = UIImageView(frame: CGRect(x: -10,  y:0, width: 20, height: 20))
-            let image: UIImage = UIImage(named: "bullet-icon")!
-            rightImageView.image = image
-            let view = UIView(frame: CGRect(x:0,  y:0, width: 20, height: 20 ))
-            view.addSubview(rightImageView)
-            email.rightView = view
-            emailCorrect = true
-        }
-        else {
-            let rightImageView = UIImageView(frame: CGRect(x: -10,  y:0, width: 20, height: 20))
-            let image: UIImage = UIImage(named: "error")!
-            rightImageView.image = image
-            let view = UIView(frame: CGRect(x:0,  y:0, width: 20, height: 20 ))
-            view.addSubview(rightImageView)
-            email.rightView = view
-            emailCorrect = false
-        }
-    }
-    
-    
-    
+    @IBOutlet weak var scrollView: UIScrollView!
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
         // Do any additional setup after loading the view, typically from a nib.
         // 1. create a gesture recognizer (tap gesture)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(gesture:)))
@@ -58,10 +17,8 @@ class ViewController: UIViewController {
         scrollView.addGestureRecognizer(tapGesture)
         
         
-        
     }
-
-    // to show and hide navigation controller
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -73,7 +30,6 @@ class ViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         removeObserver()
     }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -96,8 +52,8 @@ class ViewController: UIViewController {
     
     func keyboardWillShow(notification: Notification){
         guard let userInfo = notification.userInfo,
-        let frame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else{
-            return
+            let frame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else{
+                return
         }
         let contentInset = UIEdgeInsets(top: 0, left:0, bottom: frame.height, right: 0)
         scrollView.contentInset = contentInset
@@ -111,12 +67,9 @@ class ViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
-    func isValidEmail(testStr:String) -> Bool {
-        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        
-        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailTest.evaluate(with: testStr)
-    }
-  
+    
+    
 }
+
+
 
