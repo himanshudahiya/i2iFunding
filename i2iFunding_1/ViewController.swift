@@ -16,32 +16,30 @@ class ViewController: UIViewController {
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var backgroundImage: UIImageView!
     
+    //login segue function
     @IBAction func login(_ sender: Any) {
         if(emailCorrect==true){
             performSegue(withIdentifier: "login_correct", sender: self)
         }
     }
-    
+    // email validation
     var emailCorrect = false
     @IBAction func emailEditing(_ sender: Any) {
+        let rightImageView = UIImageView(frame: CGRect(x: -10,  y:0, width: 20, height: 20))
+        var image: UIImage
         if isValidEmail(testStr: email.text!) == true {
-            let rightImageView = UIImageView(frame: CGRect(x: -10,  y:0, width: 20, height: 20))
-            let image: UIImage = UIImage(named: "bullet-icon")!
-            rightImageView.image = image
-            let view = UIView(frame: CGRect(x:0,  y:0, width: 20, height: 20 ))
-            view.addSubview(rightImageView)
-            email.rightView = view
+            image = UIImage(named: "bullet-icon")!
             emailCorrect = true
         }
         else {
-            let rightImageView = UIImageView(frame: CGRect(x: -10,  y:0, width: 20, height: 20))
-            let image: UIImage = UIImage(named: "error")!
-            rightImageView.image = image
-            let view = UIView(frame: CGRect(x:0,  y:0, width: 20, height: 20 ))
-            view.addSubview(rightImageView)
-            email.rightView = view
+            image = UIImage(named: "error")!
             emailCorrect = false
         }
+        
+        rightImageView.image = image
+        let view = UIView(frame: CGRect(x:0,  y:0, width: 20, height: 20 ))
+        view.addSubview(rightImageView)
+        email.rightView = view
     }
     
     

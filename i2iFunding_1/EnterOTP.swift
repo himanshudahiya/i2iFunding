@@ -12,6 +12,11 @@ class EnterOTP: UIViewController {
     
     var isTerms1Clicked:Bool!
     var isTerms2Clicked:Bool!
+    
+    var email: String!
+    var mobile: String!
+    var token: String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         isTerms1Clicked = false
@@ -105,6 +110,64 @@ class EnterOTP: UIViewController {
         }
     }
     
+    @IBOutlet weak var mobileOTP: TextField!
+    var mobileOTPCorrect = false
+    @IBAction func mobileOTPEditing(_ sender: Any) {
+        let rightImageView = UIImageView(frame: CGRect(x: -10,  y:0, width: 20, height: 20))
+        var image: UIImage!
+        if mobileOTP.text?.count != 6{
+            image = UIImage(named: "error")!
+            rightImageView.image = image
+            let view = UIView(frame: CGRect(x:0,  y:0, width: 20, height: 20))
+            view.addSubview(rightImageView)
+            mobileOTP.rightView = view
+            mobileOTPCorrect = false
+        }
+        else {
+            let fieldProperties = FieldProperties(FieldValue: mobileOTP.text!, FieldValid: mobileOTPCorrect, JsonURLEnd: "/?partner=false", TextField: mobileOTP, JsonURLStart: "checkMobileOTP/" + mobile + "/")
+            
+            let fieldValidation = FieldValidation()
+            fieldValidation.FieldValidationFunc(FieldProperties: fieldProperties, completion: {
+                fieldValid in
+                print(fieldValid)
+                self.mobileOTPCorrect = fieldValid
+            })
+            //mobileCorrect = success
+            print("mobileOTPCorrect", mobileOTPCorrect)
+        }
+    }
+    
+    @IBOutlet weak var emailOTP: TextField!
+    var emailOTPCorrect = false
+    @IBAction func rmailOTPEditing(_ sender: Any) {
+        let rightImageView = UIImageView(frame: CGRect(x: -10,  y:0, width: 20, height: 20))
+        var image: UIImage!
+        if emailOTP.text?.count != 6{
+            image = UIImage(named: "error")!
+            rightImageView.image = image
+            let view = UIView(frame: CGRect(x:0,  y:0, width: 20, height: 20))
+            view.addSubview(rightImageView)
+            emailOTP.rightView = view
+            emailOTPCorrect = false
+        }
+        else {
+            let fieldProperties = FieldProperties(FieldValue: emailOTP.text!, FieldValid: emailOTPCorrect, JsonURLEnd: "/?partner=false", TextField: emailOTP, JsonURLStart: "checkEmailOTP/" + email + "/")
+            
+            let fieldValidation = FieldValidation()
+            fieldValidation.FieldValidationFunc(FieldProperties: fieldProperties, completion: {
+                fieldValid in
+                print(fieldValid)
+                self.emailOTPCorrect = fieldValid
+            })
+            //mobileCorrect = success
+            print("emailOTPCorrect", emailOTPCorrect)
+        }
+    }
+    
+    
+    @IBOutlet weak var signUP: RoundedButton!
+    @IBAction func signUPButton(_ sender: Any) {
+    }
     
 }
 

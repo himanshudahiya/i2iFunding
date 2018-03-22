@@ -1,0 +1,15 @@
+PODS:
+  - CountryPickerSwift (1.7.1)
+  - SearchTextField (1.2.0)
+
+DEPENDENCIES:
+  - CountryPickerSwift
+  - SearchTextField
+
+SPEC CHECKSUMS:
+  CountryPickerSwift: d46dcaadc64fd6e0f00c98dd23a432de858a5193
+  SearchTextField: a5bb7e4c33affadb115afdbe8100d84ef10a8024
+
+PODFILE CHECKSUM: 7f6ec6214d1972e7369441ad8867180a54a59c43
+
+COCOAPODS: 1.4.0
