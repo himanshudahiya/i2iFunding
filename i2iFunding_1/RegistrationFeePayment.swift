@@ -104,6 +104,7 @@ class RegistrationFeePayment: UIViewController{
                 self.navigationController?.pushViewController(paymentOptionVC!, animated: true)
             }
             else {
+                print("eroor: ", errorMessage)
                 // error occurred while creating the request
             }
             } as! completionBlockForPayUPaymentRelatedDetail)

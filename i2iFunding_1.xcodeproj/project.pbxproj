@@ -13,7 +13,6 @@
 		394F56E1202F9FA700AE9547 /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F56E0202F9FA700AE9547 /* UserDetails.swift */; };
 		39619F6C20645F32003087BC /* libz.1.1.3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 39619F6B20645F32003087BC /* libz.1.1.3.tbd */; };
 		39619FB420646A17003087BC /* RegistrationFeePayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39619FB320646A17003087BC /* RegistrationFeePayment.swift */; };
-		3995771420616F9E0015CD5D /* LoanEligibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3995771320616F9E0015CD5D /* LoanEligibility.swift */; };
 		3997380520647718009AE39A /* PayUCBInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3997379020647718009AE39A /* PayUCBInfo.plist */; };
 		3997380620647718009AE39A /* PUCBAllPaymentOption.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3997379220647718009AE39A /* PUCBAllPaymentOption.xib */; };
 		3997380720647718009AE39A /* PUCBApproveView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3997379320647718009AE39A /* PUCBApproveView.xib */; };
@@ -65,6 +64,7 @@
 		39A93FFB2060199100913B9E /* FieldValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A93FFA2060199100913B9E /* FieldValidation.swift */; };
 		39AB4DEF2061870B00EF335F /* DLRadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 39AB4DED2061870A00EF335F /* DLRadioButton.m */; };
 		39C11737203372D6002FDE15 /* EmploymentDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C11736203372D6002FDE15 /* EmploymentDetails.swift */; };
+		39C64C152072D8B100379DA8 /* LoanEligibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C64C142072D8B100379DA8 /* LoanEligibility.swift */; };
 		39DD3EE6202E529D0029B9EA /* EnterOTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DD3EE5202E529D0029B9EA /* EnterOTP.swift */; };
 		39E9215C2017C494002C8716 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E9215B2017C494002C8716 /* AppDelegate.swift */; };
 		39E9215E2017C494002C8716 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E9215D2017C494002C8716 /* ViewController.swift */; };
@@ -105,7 +105,6 @@
 		394F56E0202F9FA700AE9547 /* UserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetails.swift; sourceTree = "<group>"; };
 		39619F6B20645F32003087BC /* libz.1.1.3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.1.3.tbd; path = usr/lib/libz.1.1.3.tbd; sourceTree = SDKROOT; };
 		39619FB320646A17003087BC /* RegistrationFeePayment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationFeePayment.swift; sourceTree = "<group>"; };
-		3995771320616F9E0015CD5D /* LoanEligibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoanEligibility.swift; sourceTree = "<group>"; };
 		3997378C20647718009AE39A /* CBConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBConnection.h; sourceTree = "<group>"; };
 		3997378D20647718009AE39A /* CBConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBConstant.h; sourceTree = "<group>"; };
 		3997378E20647718009AE39A /* CBWKConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBWKConnection.h; sourceTree = "<group>"; };
@@ -217,6 +216,7 @@
 		39AB4DED2061870A00EF335F /* DLRadioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLRadioButton.m; sourceTree = "<group>"; };
 		39AB4DEE2061870B00EF335F /* DLRadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLRadioButton.h; sourceTree = "<group>"; };
 		39C11736203372D6002FDE15 /* EmploymentDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmploymentDetails.swift; sourceTree = "<group>"; };
+		39C64C142072D8B100379DA8 /* LoanEligibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoanEligibility.swift; sourceTree = "<group>"; };
 		39DD3EE5202E529D0029B9EA /* EnterOTP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterOTP.swift; sourceTree = "<group>"; };
 		39E921582017C494002C8716 /* i2iFunding_1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = i2iFunding_1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		39E9215B2017C494002C8716 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -569,10 +569,10 @@
 				39F6D4E8204AB3F8005C3BB2 /* EducationDetails.swift */,
 				39118730204FE0D900A8F145 /* i2iFunding_1-Bridging-Header.h */,
 				39A93FFA2060199100913B9E /* FieldValidation.swift */,
-				3995771320616F9E0015CD5D /* LoanEligibility.swift */,
 				39AB4DEE2061870B00EF335F /* DLRadioButton.h */,
 				39AB4DED2061870A00EF335F /* DLRadioButton.m */,
 				39619FB320646A17003087BC /* RegistrationFeePayment.swift */,
+				39C64C142072D8B100379DA8 /* LoanEligibility.swift */,
 			);
 			path = i2iFunding_1;
 			sourceTree = "<group>";
@@ -957,8 +957,8 @@
 				39E9215C2017C494002C8716 /* AppDelegate.swift in Sources */,
 				39AB4DEF2061870B00EF335F /* DLRadioButton.m in Sources */,
 				3997382820647718009AE39A /* PUUITabBarTopView.m in Sources */,
-				3995771420616F9E0015CD5D /* LoanEligibility.swift in Sources */,
 				39F6D4E9204AB3F8005C3BB2 /* EducationDetails.swift in Sources */,
+				39C64C152072D8B100379DA8 /* LoanEligibility.swift in Sources */,
 				39101D172023A0FB00211573 /* TextField.swift in Sources */,
 				3997382320647718009AE39A /* PUUICCDCVC.m in Sources */,
 			);

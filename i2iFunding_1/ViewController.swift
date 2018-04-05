@@ -16,34 +16,89 @@ class ViewController: UIViewController {
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var backgroundImage: UIImageView!
     
+    
+    struct LoginResponse: Decodable {
+        let csrf_token: String
+        let session_id: String
+        let message: String
+        init(json: [String: Any]){
+            csrf_token = json["csrf_token"] as? String ?? ""
+            session_id = json["session_id"] as? String ?? ""
+            message = json["message"] as? String ?? ""
+        }
+    }
+    struct LoginResponse2: Decodable {
+        let csrf_token: String
+        let session_id: String
+        let php_csrf_token: String
+        let php_session_id: String
+        init(json: [String: Any]){
+            csrf_token = json["csrf_token"] as? String ?? ""
+            session_id = json["session_id"] as? String ?? ""
+            php_csrf_token = json["php_csrf_token"] as? String ?? ""
+            php_session_id = json["php_session_id"] as? String ?? ""
+        }
+    }
+    var session_id: String = ""
+    var csrf_token: String = ""
+    var message: String? = ""
+    
     //login segue function
     @IBAction func login(_ sender: Any) {
-        if(emailCorrect==true){
-            performSegue(withIdentifier: "login_correct", sender: self)
-        }
+        let params = [
+            "usr_email": "himanshudahiya06@gmail.com", //email.text!,
+            "usr_password": "Redowid@4" //password.text!,
+            ]
+        let postURL = "http://localhost:8080/api/v1/login"
+        guard let url = URL(string: postURL) else{
+            print("bad url")
+            return}
+        print("url = ", url)
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue( "application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        guard let httpBody = try? JSONSerialization.data(withJSONObject: params, options: []) else{
+            print("bad http body")
+            return}
+        request.httpBody = httpBody
+        let session = URLSession.shared
+        session.dataTask(with: request) { (data, response, error) in
+            if let response = response {
+                print(response)
+            }
+            if let data = data{
+                do{
+                    print("trying json")
+                    let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                    print(json ?? "")
+                    
+                    //let loginResponse = try JSONDecoder().decode(LoginResponse.self, from: data)
+                    DispatchQueue.main.async {
+                        self.csrf_token = json!["csrf_token"] as! String
+                        self.session_id = json!["session_id"] as! String
+                        self.message = json!["message"] as? String
+                        let preferences = UserDefaults.standard
+                        preferences.set(self.session_id, forKey: "session_id")
+                        preferences.set(self.csrf_token, forKey: "csrf_token")
+                        preferences.synchronize()
+                        if self.message == "Your account is not active"{
+                            self.performSegue(withIdentifier: "notActiveAccount", sender: self)
+                        }
+                        else {
+                            self.performSegue(withIdentifier: "login_correct", sender: self)
+                        }
+                    }
+                    
+                } catch{
+                    print(error)
+                }
+            }
+            }.resume()
+        
+        
     }
     // email validation
-    var emailCorrect = false
-    @IBAction func emailEditing(_ sender: Any) {
-        let rightImageView = UIImageView(frame: CGRect(x: -10,  y:0, width: 20, height: 20))
-        var image: UIImage
-        if isValidEmail(testStr: email.text!) == true {
-            image = UIImage(named: "bullet-icon")!
-            emailCorrect = true
-        }
-        else {
-            image = UIImage(named: "error")!
-            emailCorrect = false
-        }
-        
-        rightImageView.image = image
-        let view = UIView(frame: CGRect(x:0,  y:0, width: 20, height: 20 ))
-        view.addSubview(rightImageView)
-        email.rightView = view
-    }
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         

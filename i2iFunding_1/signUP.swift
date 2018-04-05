@@ -195,7 +195,7 @@ class signUP: UIViewController {
             panCardCorrect = false
         }
         else {
-            let fieldProperties = FieldProperties(FieldValue: panCard.text!, FieldValid: panCardCorrect, JsonURLEnd: "i2i_users||usr_pan/", TextField: panCard, JsonURLStart: "checkPan/")
+            let fieldProperties = FieldProperties(FieldValue: panCard.text!, FieldValid: panCardCorrect, JsonURLEnd: "/i2i_users&&usr_pan/", TextField: panCard, JsonURLStart: "checkPan/")
             
             let fieldValidation = FieldValidation()
             fieldValidation.FieldValidationFunc(FieldProperties: fieldProperties, completion: {
@@ -223,7 +223,7 @@ class signUP: UIViewController {
         let rightImageView = UIImageView(frame: CGRect(x: -10,  y:0, width: 20, height: 20))
         var image: UIImage!
         if(isValidEmail(testStr: email.text!) == true) {
-            let fieldProperties = FieldProperties(FieldValue: email.text!, FieldValid: emailCorrect, JsonURLEnd: "/i2i_users||usr_email", TextField: email, JsonURLStart: "checkEmail/")
+            let fieldProperties = FieldProperties(FieldValue: email.text!, FieldValid: emailCorrect, JsonURLEnd: "/i2i_users&&usr_email", TextField: email, JsonURLStart: "checkEmail/")
             
             let fieldValidation = FieldValidation()
             fieldValidation.FieldValidationFunc(FieldProperties: fieldProperties, completion:{ success in
@@ -369,6 +369,8 @@ class signUP: UIViewController {
 //                          "lastName    ": lastName.text!,
 //                          "middleName" : middleName.text!,
 //                          "mobileOTP" : "",
+//                          "mobileNum" : mobile.text!,
+
 //                          "panNumber": panCard.text!,
 //                          "password" : password.text!,
 //                          "password2" : retypePassword.text!,
@@ -379,15 +381,16 @@ class signUP: UIViewController {
                 "middleName" : "",
                 "lastName": "Dahiya",
                 "gender" : "M",
-                "aadhar" : "929391929192",
-                "panNumber": "JAJSJ9292J",
-                "emailID" : "himanshudahiya06@gmail.com",
+                "aadhar" : "883828382832",
+                "panNumber": "HAHSH7838J",
+                "emailID" : "dahiyahimanshu94@gmail.com",
+                "mobileNum" : "8209872271",
                 "password" : "Redowid@4",
                 "password2" : "Redowid@4",
                 "emailOTP" : "",
                 "mobileOTP" : "",
                 "type" : "borrower"]
-            let postURL = "https://api.i2ifunding.com/api/v1/borrowerRegistration/basic/?institution=false"
+            let postURL = "http://localhost:8080/api/v1/borrowerRegistration/basic/?institution=false"
             guard let url = URL(string: postURL) else{
                 print("bad url")
                 return}
@@ -405,7 +408,6 @@ class signUP: UIViewController {
             let session = URLSession.shared
             print("session created")
             print("request = " , request)
-            
             session.dataTask(with: request) { (data, response, error) in
                 print("ok2")
                 if let response = response {
@@ -419,8 +421,10 @@ class signUP: UIViewController {
                         self.otpSent = sentOTPResponse.otpSent
                         self.token = sentOTPResponse.token
                         print(json)
+                        DispatchQueue.main.async {
+                             self.performSegue(withIdentifier: "sendOTP", sender: self)
+                        }
                         
-                        self.performSegue(withIdentifier: "sendOTP", sender: self)
                     } catch{
                         print(error)
                     }
@@ -430,13 +434,24 @@ class signUP: UIViewController {
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.destination as? EnterOTP{
-            destination.email = self.email.text
-            destination.mobile = self.mobile.text
-            destination.token = self.token
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {print("prepare")
+            if let destination = segue.destination as? EnterOTP{
+                destination.email = "dahiyahimanshu94@gmail.com" //self.email.text
+                destination.mobile = "8209872271" //self.mobile.text
+                destination.token = self.token
+                destination.firstName = "Himanshu"//firstName.text!
+                destination.middleName = ""//middleName.text!
+                destination.lastName = "Dahiya"//lastName.text!
+                destination.gender = "M"//genderSelected
+                destination.aadhar = "883828382832"//aadharCard.text!
+                destination.panNumber = "HAHSH7838J"//panCard.text!
+                destination.password = "Redowid@4"//password.text!
+                destination.password2 = "Redowid@4"//retypePassword.text!
+                destination.mobileCode = ""
         }
     }
+    
     
 }
 

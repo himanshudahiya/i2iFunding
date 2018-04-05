@@ -8,7 +8,7 @@
 import SearchTextField
 import UIKit
 
-class LoanEligibility: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate{
+class LoanEligibility: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UIScrollViewDelegate{
     
     
     @IBOutlet weak var scrollView: UIScrollView!
@@ -29,25 +29,20 @@ class LoanEligibility: UIViewController, UIPickerViewDataSource, UIPickerViewDel
     let pickerViewPurpose = UIPickerView()
     
     struct PinCodeResponse: Decodable {
-        let pinID: Int
-        let pinCode: Int
-        let pinCity: String
-        let pinState: String
-        let pinStatus: Int
+        let pin_id: Int
+        let pin_code: Int
+        let pin_city: String
+        let pin_state: String
+        let pin_status: Int
         init(json: [String: Any]){
-            pinID = json["pin_id"] as? Int ?? 0
-            pinCode = json["pin_code"] as? Int ?? 0
-            pinCity = json["pin_city"] as? String ?? ""
-            pinState = json["pin_state"] as? String ?? ""
-            pinStatus = json["pin_status"] as? Int ?? 0
+            pin_id = json["pin_id"] as? Int ?? 0
+            pin_code = json["pin_code"] as? Int ?? 0
+            pin_city = json["pin_city"] as? String ?? ""
+            pin_state = json["pin_state"] as? String ?? ""
+            pin_status = json["pin_status"] as? Int ?? 0
         }
     }
-//    struct CompanyNameResponse: Decodable{
-//        let company: [String]
-//        init(){
-//            company = json[]
-//        }
-//    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -64,9 +59,20 @@ class LoanEligibility: UIViewController, UIPickerViewDataSource, UIPickerViewDel
         // 2. add the gesture recognizer to a view
         scrollView.addGestureRecognizer(tapGesture)
         createDOBPicker()
+        scrollView.delegate = self
         createJoiningDatePicker()
         createStayingDatePicker()
+        companyName.theme.bgColor = UIColor.white
+       
+        
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print("scrolling")
+        //let searchTextField = SearchTextField()
+        companyName.redrawTable()
+    }
+    
     //function for picker view
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -104,7 +110,7 @@ class LoanEligibility: UIViewController, UIPickerViewDataSource, UIPickerViewDel
             loanPurpose.text = loanPurposeField[row]
         }
     }
-
+    
     // date of birth picker
     func createDOBPicker(){
         //toolbar
@@ -116,7 +122,7 @@ class LoanEligibility: UIViewController, UIPickerViewDataSource, UIPickerViewDel
         dateOfBirth.inputAccessoryView = toolbar
         dateOfBirth.inputView = dobPicker
     }
-
+    
     @objc func donePressed(){
         let formatter = DateFormatter()
         formatter.dateFormat = "dd-MM-yyyy"
@@ -172,7 +178,7 @@ class LoanEligibility: UIViewController, UIPickerViewDataSource, UIPickerViewDel
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addObserver()
-
+        
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -186,7 +192,7 @@ class LoanEligibility: UIViewController, UIPickerViewDataSource, UIPickerViewDel
     @objc func handleTap(gesture: UITapGestureRecognizer) {
         self.view.endEditing(true)
     }
-
+    
     func addObserver() {
         NotificationCenter.default.addObserver(forName: .UIKeyboardWillShow, object: nil, queue: nil){
             notification in
@@ -197,7 +203,7 @@ class LoanEligibility: UIViewController, UIPickerViewDataSource, UIPickerViewDel
             self.keyboardWillHide(notification: notification)
         }
     }
-
+    
     func keyboardWillShow(notification: Notification){
         guard let userInfo = notification.userInfo,
             let frame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else{
@@ -206,11 +212,11 @@ class LoanEligibility: UIViewController, UIPickerViewDataSource, UIPickerViewDel
         let contentInset = UIEdgeInsets(top: 0, left:0, bottom: frame.height, right: 0)
         scrollView.contentInset = contentInset
     }
-
+    
     func keyboardWillHide(notification: Notification){
         scrollView.contentInset = UIEdgeInsets.zero
     }
-
+    
     func removeObserver() {
         NotificationCenter.default.removeObserver(self)
     }
@@ -218,10 +224,17 @@ class LoanEligibility: UIViewController, UIPickerViewDataSource, UIPickerViewDel
     // function to make drop down visible or hidden
     @IBOutlet weak var employmentTypeButton: UIButton!
     var employmentTypeButtonSelected = false
+    var employmentTypeValue = ""
     @IBOutlet var employmentType: [UIButton]!
     @IBAction func handleSelection(_ sender: UIButton) {
+        
         employmentType.forEach { (button) in
             UIView.animate(withDuration: 0.3, animations: {
+                if button.isHidden == true{
+                    self.employmentTypeButton.setTitle("Employment Type", for: .normal)
+                    self.employmentTypeButtonSelected = false
+                    self.employmentTypeValue = ""
+                }
                 button.isHidden = !button.isHidden
                 self.view.layoutIfNeeded()
             })
@@ -232,7 +245,6 @@ class LoanEligibility: UIViewController, UIPickerViewDataSource, UIPickerViewDel
         case zero = "Business"
         case one = "Self Employed"
         case two = "Salaried"
-        case three = "Employment Type"
     }
     // business options
     @IBOutlet weak var businessEstYear: TextField!
@@ -255,6 +267,10 @@ class LoanEligibility: UIViewController, UIPickerViewDataSource, UIPickerViewDel
     var selfGrossAPValid = false
     
     // salaried options
+    //@IBOutlet weak var companyName: SearchTextField!
+    
+    //@IBOutlet weak var companyName: UITextField!
+    
     @IBOutlet weak var companyName: SearchTextField!
     var companyNameValid = false
     @IBOutlet weak var monthlySalary: TextField!
@@ -292,6 +308,8 @@ class LoanEligibility: UIViewController, UIPickerViewDataSource, UIPickerViewDel
             salariedLabel.isHidden = true
             workExpStack.isHidden = true
             employmentTypeButtonSelected = true
+            employmentTypeValue = title
+            employmentTypeButton.setTitle(num.rawValue, for: .normal)
         case .one:
             print("1")
             businessType.isHidden = true
@@ -309,6 +327,8 @@ class LoanEligibility: UIViewController, UIPickerViewDataSource, UIPickerViewDel
             salariedLabel.isHidden = true
             workExpStack.isHidden = true
             employmentTypeButtonSelected = true
+            employmentTypeValue = title
+            employmentTypeButton.setTitle(num.rawValue, for: .normal)
         case .two:
             print("2")
             businessType.isHidden = true
@@ -326,22 +346,8 @@ class LoanEligibility: UIViewController, UIPickerViewDataSource, UIPickerViewDel
             salariedLabel.isHidden = false
             workExpStack.isHidden = false
             employmentTypeButtonSelected = true
-        case .three:
-            businessType.isHidden = true
-            businessEstYear.isHidden = true
-            businessGrossAT.isHidden = true
-            businessGrossAP.isHidden = true
-            totalProfExp.isHidden = true
-            professionType.isHidden = true
-            selfGrossAT.isHidden = true
-            selfGrossAP.isHidden = true
-            companyName.isHidden = true
-            monthlySalary.isHidden = true
-            salaryMode.isHidden = true
-            joiningDate.isHidden = true
-            salariedLabel.isHidden = true
-            workExpStack.isHidden = true
-            employmentTypeButtonSelected = false
+            employmentTypeValue = title
+            employmentTypeButton.setTitle(num.rawValue, for: .normal)
         }
         handleSelection(employmentTypeButton)
     }
@@ -419,6 +425,7 @@ class LoanEligibility: UIViewController, UIPickerViewDataSource, UIPickerViewDel
     
     @IBOutlet weak var city: TextField!
     var cityValid = false
+    var cityValue: String!
     @IBAction func pinCodeEditing(_ sender: Any) {
         let rightImageView = UIImageView(frame: CGRect(x: -10,  y:0, width: 20, height: 20))
         var image: UIImage!
@@ -438,19 +445,21 @@ class LoanEligibility: UIViewController, UIPickerViewDataSource, UIPickerViewDel
                 print(data)
                 do {
                     let pinResponse = try JSONDecoder().decode(PinCodeResponse.self, from: data)
-                    let cityValue = pinResponse.pinCity
-                        image = UIImage(named: "bullet-icon")!
-                        DispatchQueue.main.async { // Correct
-                            self.city.text = cityValue
-                            self.cityValid = true
-                            
-                            rightImageView.image = image
-                            let view = UIView(frame: CGRect(x:0,  y:0, width: 20, height: 20))
-                            view.addSubview(rightImageView)
-                            self.pinCode.rightView = view
-                            self.city.rightView = view
-                            self.pinCodeValid = true
-                        }
+                    
+                    image = UIImage(named: "bullet-icon")!
+                    DispatchQueue.main.async { // Correct
+                        //self.city.text = cityValue
+                        self.cityValid = true
+                        self.cityValue = pinResponse.pin_city
+                        
+                        rightImageView.image = image
+                        let view = UIView(frame: CGRect(x:0,  y:0, width: 20, height: 20))
+                        view.addSubview(rightImageView)
+                        self.pinCode.rightView = view
+                        //self.city.rightView = view
+                        self.pinCodeValid = true
+                        self.cityEditing()
+                    }
                     
                 }
                 catch {
@@ -466,10 +475,21 @@ class LoanEligibility: UIViewController, UIPickerViewDataSource, UIPickerViewDel
             view.addSubview(rightImageView)
             pinCode.rightView = view
             cityValid = false
-            city.text = ""
-            city.rightView = view
+            //city.text = ""
+            //city.rightView = view
             
         }
+    }
+    
+    func cityEditing(){
+        city.text = cityValue
+        let rightImageView = UIImageView(frame: CGRect(x: -10,  y:0, width: 20, height: 20))
+        var image: UIImage!
+        image = UIImage(named: "bullet-icon")!
+        rightImageView.image = image
+        let view = UIView(frame: CGRect(x:0,  y:0, width: 20, height: 20))
+        view.addSubview(rightImageView)
+        city.rightView = view
     }
     
     // business est year
@@ -631,7 +651,7 @@ class LoanEligibility: UIViewController, UIPickerViewDataSource, UIPickerViewDel
         view.addSubview(rightImageView)
         selfGrossAP.rightView = view
     }
-
+    
     //https://api.i2ifunding.com/api/v1/companySearch/a
     //company name
     
@@ -642,35 +662,42 @@ class LoanEligibility: UIViewController, UIPickerViewDataSource, UIPickerViewDel
         if (companyName.text!.count) >= 1 {
             rightImageView.image = image
             let view = UIView(frame: CGRect(x:0,  y:0, width: 20, height: 20))
-            image = UIImage(named: "bullet-icon")!
-            view.addSubview(rightImageView)
-            self.companyName.rightView = view
-            self.companyNameValid = true
-//            let jsonurl = "https://api.i2ifunding.com/api/v1/companySearch/" + companyName.text
-//
-//            guard let url = URL(string: jsonurl) else{return}
-//            let session = URLSession.shared
-//
-//            session.dataTask(with: url) { (data, response, error) in
-//                guard let response = response else {return}
-//
-//                print(response)
-//                guard let data = data else{ return}
-//                print(data)
-//                do {
-//                    //let pinResponse = try JSONSerialization.jsonObject(with: date, options: )
-//                    if let json = (try? NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue: 0))) as? [[String : AnyObject]] {
-//                        print(json.count) // Should be 2, based on your sample json above
-//                    }
-//                    DispatchQueue.main.async { // Correct
-//
-//                    }
-//
-//                }
-//                catch {
-//                    print(error)
-//                }
-//                }.resume()
+            
+                        let jsonurl = "https://api.i2ifunding.com/api/v1/companySearch/" + companyName.text!
+            
+                        guard let url = URL(string: jsonurl) else{return}
+                        let session = URLSession.shared
+            
+                        session.dataTask(with: url) { (data, response, error) in
+                            guard let response = response else {return}
+            
+                            print(response)
+                            guard let data = data else{ return}
+                            print(data)
+                            do {
+                                //let pinResponse = try JSONSerialization.jsonObject(with: date, options: )
+                                
+                                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                                
+                                let companies = json as! [String]
+                                var companyList: [String] = []
+                                for company in companies {
+                                    companyList.append(company)
+                                }
+                                
+                                DispatchQueue.main.async { // Correct
+                                    self.companyName.filterStrings(companyList)
+                                    image = UIImage(named: "bullet-icon")!
+                                    self.view.addSubview(rightImageView)
+                                    self.companyName.rightView = view
+                                    self.companyNameValid = true
+                                }
+            
+                            }
+                            catch {
+                                print(error)
+                            }
+                            }.resume()
         }
         else {
             image = UIImage(named: "error")!
@@ -678,10 +705,8 @@ class LoanEligibility: UIViewController, UIPickerViewDataSource, UIPickerViewDel
             rightImageView.image = image
             let view = UIView(frame: CGRect(x:0,  y:0, width: 20, height: 20 ))
             view.addSubview(rightImageView)
-            pinCode.rightView = view
-            cityValid = false
-            city.text = ""
-            city.rightView = view
+            self.companyName.rightView = view
+            self.companyNameValid = true
             
         }
     }
@@ -714,6 +739,11 @@ class LoanEligibility: UIViewController, UIPickerViewDataSource, UIPickerViewDel
     @IBAction func handleSalaryMode(_ sender: UIButton) {
         salaryModes.forEach { (button) in
             UIView.animate(withDuration: 0.3, animations: {
+                if button.isHidden == true{
+                    self.salaryModeButton.setTitle("Salary Mode", for: .normal)
+                    self.salaryModeButtonSelected = false
+                    self.salarayMode = ""
+                }
                 button.isHidden = !button.isHidden
                 self.view.layoutIfNeeded()
             })
@@ -721,28 +751,27 @@ class LoanEligibility: UIViewController, UIPickerViewDataSource, UIPickerViewDel
     }
     
     enum salary: String{
-        case zero = "Salary Mode"
         case one = "Cash"
         case two = "Cheque"
         case three = "Credit to Bank Account"
     }
     @IBAction func salaryTypesTapped(_ sender: UIButton) {
-        guard let title = sender.currentTitle, let num = nums(rawValue: title) else {
+        guard let title = sender.currentTitle, let num = salary(rawValue: title) else {
             return
         }
         switch num {
-        case .zero:
-            salaryModeButtonSelected = false
-            salarayMode = ""
         case .one:
             salaryModeButtonSelected = true
             salarayMode = title
+            salaryModeButton.setTitle(num.rawValue, for: .normal)
         case .two:
             salaryModeButtonSelected = true
             salarayMode = title
+            salaryModeButton.setTitle(num.rawValue, for: .normal)
         case .three:
             salaryModeButtonSelected = true
             salarayMode = title
+            salaryModeButton.setTitle(num.rawValue, for: .normal)
         }
         handleSalaryMode(salaryModeButton)
     }
@@ -797,6 +826,11 @@ class LoanEligibility: UIViewController, UIPickerViewDataSource, UIPickerViewDel
     @IBAction func handleResidenceType(_ sender: UIButton) {
         residenceTypeButtons.forEach { (button) in
             UIView.animate(withDuration: 0.3, animations: {
+                if button.isHidden == true{
+                    self.residenceTypeButton.setTitle("Residence Type", for: .normal)
+                    self.residenceTypeButtonSelected = false
+                    self.residenceType = ""
+                }
                 button.isHidden = !button.isHidden
                 self.view.layoutIfNeeded()
             })
@@ -804,7 +838,6 @@ class LoanEligibility: UIViewController, UIPickerViewDataSource, UIPickerViewDel
     }
     
     enum residence: String{
-        case zero = "Residence Type"
         case one = "Rented"
         case two = "Own"
         case three = "Parental"
@@ -817,34 +850,29 @@ class LoanEligibility: UIViewController, UIPickerViewDataSource, UIPickerViewDel
     var stayingDateValid = false
     
     @IBAction func residenceTypesTapped(_ sender: UIButton) {
-        guard let title = sender.currentTitle, let num = nums(rawValue: title) else {
+        print("button tapped")
+        guard let title = sender.currentTitle, let num = residence(rawValue: title) else {
             return
         }
+        print("nums = ", num)
         switch num {
-        case .zero:
-            residenceTypeButtonSelected = false
-            residenceType = ""
-            rentedLabel.isHidden = true
-            rentedLabelRadios.isHidden = true
-            monthlyRent.isHidden = true
-            stayingSince.isHidden = true
         case .one:
-            salaryModeButtonSelected = true
-            salarayMode = title
+            residenceTypeButtonSelected = true
+            residenceType = title
             rentedLabel.isHidden = false
             rentedLabelRadios.isHidden = false
             monthlyRent.isHidden = false
             stayingSince.isHidden = false
         case .two:
-            salaryModeButtonSelected = true
-            salarayMode = title
+            residenceTypeButtonSelected = true
+            residenceType = title
             rentedLabel.isHidden = true
             rentedLabelRadios.isHidden = true
             monthlyRent.isHidden = true
             stayingSince.isHidden = true
         case .three:
-            salaryModeButtonSelected = true
-            salarayMode = title
+            residenceTypeButtonSelected = true
+            residenceType = title
             rentedLabel.isHidden = true
             rentedLabelRadios.isHidden = true
             monthlyRent.isHidden = true
@@ -1015,4 +1043,3 @@ class LoanEligibility: UIViewController, UIPickerViewDataSource, UIPickerViewDel
     
     // perform segue
 }
-

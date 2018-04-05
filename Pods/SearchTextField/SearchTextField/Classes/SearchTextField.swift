@@ -25,6 +25,10 @@ open class SearchTextField: UITextField {
     /// Indicate if keyboard is showing or not
     open var keyboardIsShowing = false
     
+    open func redrawTable(){
+        redrawSearchTableView()
+    }
+    
     /// Set your custom visual theme, or just choose between pre-defined SearchTextFieldTheme.lightTheme() and SearchTextFieldTheme.darkTheme() themes
     open var theme = SearchTextFieldTheme.lightTheme() {
         didSet {

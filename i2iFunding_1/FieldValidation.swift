@@ -26,7 +26,7 @@ struct FieldProperties {
 
 }
 class FieldValidation {
-    var jsonURL = "https://api.i2ifunding.com/api/v1/"
+    var jsonURL = "http://localhost:8080/api/v1/"
     var countValue = -1
     var fieldValid = false
     let rightImageView = UIImageView(frame: CGRect(x: -10,  y:0, width: 20, height: 20))
@@ -34,8 +34,9 @@ class FieldValidation {
     func FieldValidationFunc(FieldProperties: FieldProperties, completion: @escaping (_ fieldValid: Bool) -> ()){
         
         let jsonurl = jsonURL + FieldProperties.JsonURLStart + FieldProperties.FieldValue + FieldProperties.JsonURLEnd
-        
-        guard let url = URL(string: jsonurl) else{return}
+        print(jsonurl)
+        guard let url = URL(string: jsonurl) else{
+           return}
         let session = URLSession.shared
         
         session.dataTask(with: url) { (data, response, error) in
@@ -50,7 +51,7 @@ class FieldValidation {
                 print(self.countValue)
                 if(self.countValue == 0){
                     self.image = UIImage(named: "bullet-icon")!
-                    DispatchQueue.main.async { // Correct
+                    DispatchQueue.main.async {
                         self.rightImageView.image = self.image
                         let view = UIView(frame: CGRect(x:0,  y:0, width: 20, height: 20))
                         view.addSubview(self.rightImageView)
@@ -63,7 +64,7 @@ class FieldValidation {
                 }
                 else{
                     self.image = UIImage(named: "error")!
-                    DispatchQueue.main.async { // Correct
+                    DispatchQueue.main.async { 
                         self.rightImageView.image = self.image
                         let view = UIView(frame: CGRect(x:0,  y:0, width: 20, height: 20))
                         view.addSubview(self.rightImageView)
